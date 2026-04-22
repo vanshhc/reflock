@@ -21,7 +21,7 @@ async function fetchRange(range: string): Promise<string[][]> {
 //            M=twitter, N=youtube, O=linkedin, P=instagram, Q=website
 function parseStoreRow(row: string[]): Omit<Store, "offerings"> | null {
   const id = parseInt(row[0] ?? "");
-  const handle = row[1] ?? "";
+  const handle = (row[1] ?? "").trim();
   if (isNaN(id) || !handle) return null;
 
   const twitter   = row[12] || undefined;
