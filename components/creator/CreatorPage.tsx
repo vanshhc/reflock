@@ -566,19 +566,12 @@ function ProductCard({
           style={{ borderTopColor: "rgba(255,255,255,0.06)" }}
         >
           <span className="font-[family-name:var(--font-mono)] text-sm font-medium text-[var(--color-off-white)] flex items-baseline gap-0.5">
-            {offering.price.includes("/mo") ? (
-              <>
-                <span>{offering.price.replace("/mo", "")}</span>
-                <span className="text-xs text-[var(--color-gray-600)]">/month</span>
-              </>
-            ) : (
-              <span>{offering.price}</span>
-            )}
+            <span>{offering.price}</span>
           </span>
           <Link
             href={`/${storeHandle}/${slugify(offering.name)}`}
             onClick={(e) => { e.stopPropagation(); track("product_click", storeHandle, offering.name); }}
-            className="text-xs font-semibold text-[var(--color-off-white)] px-4 py-2 rounded-full whitespace-nowrap transition-opacity duration-150 hover:opacity-90 active:scale-[0.97]"
+            className="text-sm font-bold tracking-[0.01em] text-[var(--color-off-white)] px-4 py-2 rounded-full whitespace-nowrap transition-opacity duration-150 hover:opacity-90 active:scale-[0.97]"
             style={{ background: accentColor }}
           >
             Join →

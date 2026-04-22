@@ -1,14 +1,7 @@
 import Link from "next/link";
 import { ChevronRight, Users } from "lucide-react";
-import type { Store, Offering, OfferingType } from "@/lib/types";
+import type { Store, Offering } from "@/lib/types";
 import { JoinButton } from "./JoinButton";
-
-function priceUnit(type: OfferingType, price: string): string {
-  if (price.includes("/mo")) return "";
-  if (type === "Coaching") return "/ session";
-  if (type === "Course" || type === "Cohort") return "/ person";
-  return "";
-}
 
 function hexAlpha(hex: string, alpha: number): string {
   const a = Math.round(alpha * 255).toString(16).padStart(2, "0");
@@ -22,7 +15,6 @@ export function OfferingDetail({
   store: Store;
   offering: Offering;
 }) {
-  const unit = priceUnit(offering.type, offering.price);
   const avatarBg = hexAlpha(store.color, 0.15);
   const avatarBorder = hexAlpha(store.color, 0.2);
 
@@ -99,15 +91,8 @@ export function OfferingDetail({
                 className="font-[family-name:var(--font-display)] text-4xl font-extrabold text-[var(--color-off-white)]"
                 style={{ letterSpacing: "-0.04em" }}
               >
-                {offering.price.includes("/mo")
-                  ? offering.price.replace("/mo", "")
-                  : offering.price}
+                {offering.price}
               </span>
-              {(offering.price.includes("/mo") || unit) && (
-                <span className="text-sm text-[var(--color-gray-600)]">
-                  {offering.price.includes("/mo") ? "/month" : unit}
-                </span>
-              )}
             </div>
 
             <JoinButton
@@ -129,35 +114,50 @@ export function OfferingDetail({
 
           {/* Creator mini-card */}
           <div
-            className="rounded-2xl p-5 border flex items-center gap-3.5"
+            className="rounded-2xl p-5 border"
             style={{
               background: "var(--color-dark-800)",
               borderColor: "rgba(255,255,255,0.06)",
             }}
           >
-            <div
-              className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-[family-name:var(--font-display)] font-extrabold text-sm"
-              style={{
-                background: avatarBg,
-                color: store.color,
-                border: `1.5px solid ${avatarBorder}`,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              {store.abbr}
-            </div>
-            <div className="min-w-0">
-              <Link
-                href={`/${store.handle}`}
-                className="block text-sm font-semibold text-[var(--color-off-white)] hover:text-[var(--color-orange)] transition-colors duration-150"
-                style={{ letterSpacing: "-0.01em" }}
+            <div className="flex items-start gap-3.5">
+              <div
+                className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-[family-name:var(--font-display)] font-extrabold text-sm"
+                style={{
+                  background: avatarBg,
+                  color: store.color,
+                  border: `1.5px solid ${avatarBorder}`,
+                  letterSpacing: "-0.03em",
+                }}
               >
-                {store.businessName}
-              </Link>
-              <p className="text-xs text-[var(--color-gray-600)] truncate mt-0.5">
-                {store.role}
-              </p>
+                {store.abbr}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p
+                  className="text-base font-semibold text-[var(--color-off-white)]"
+                  style={{ letterSpacing: "-0.01em" }}
+                >
+                  {store.businessName}
+                </p>
+                <p className="text-xs text-[var(--color-gray-600)] mt-0.5">
+                  by {store.ownerName}
+                </p>
+              </div>
             </div>
+
+            <p
+              className="text-sm text-[var(--color-gray-400)] leading-relaxed mt-4"
+              style={{ textWrap: "pretty" } as React.CSSProperties}
+            >
+              {store.bio}
+            </p>
+
+            <Link
+              href={`/${store.handle}`}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-gray-500)] hover:text-[var(--color-off-white)] transition-colors duration-150 mt-4"
+            >
+              View full profile <ChevronRight size={14} />
+            </Link>
           </div>
         </aside>
       </div>

@@ -10,10 +10,14 @@ async function fetchRange(range: string): Promise<string[][]> {
     const res = await fetch(url, { next: { revalidate: 30 } });
     if (!res.ok) return [];
     const data = await res.json();
-    return (data.values ?? []).slice(1); // drop header row
+    return data.values ?? [];
   } catch {
     return [];
   }
+}
+
+function normalizeHeader(value: string): string {
+  return value.trim().toLowerCase();
 }
 
 // Col order: A=id, B=handle, C=businessName, D=role, E=bio, F=about, G=buyers,
@@ -54,30 +58,54 @@ function parseStoreRow(row: string[]): Omit<Store, "offerings"> | null {
 }
 
 function parseOfferingRow(
-  row: string[]
+  row: string[],
+  columnIndex?: {
+    name?: number;
+    type?: number;
+    price?: number;
+    desc?: number;
+    buyers?: number;
+  }
 ): { storeId: number; offering: Offering } | null {
   const storeId = parseInt(row[0] ?? "");
-  const name = row[1] ?? "";
+  const name = row[columnIndex?.name ?? 1] ?? "";
   if (isNaN(storeId) || !name) return null;
 
   return {
     storeId,
     offering: {
       name,
-      type:   (row[2] ?? "Course") as OfferingType,
-      price:  row[3] ?? "",
-      desc:   row[4] ?? "",
-      buyers: row[5] ?? "",
+      type:   (row[columnIndex?.type ?? 2] ?? "Course") as OfferingType,
+      price:  (row[columnIndex?.price ?? 3] ?? "").trim(),
+      desc:   (row[columnIndex?.desc ?? 4] ?? "").trim(),
+      buyers: (row[columnIndex?.buyers ?? 5] ?? "").trim(),
     },
   };
 }
 
 export async function getStores(): Promise<Store[]> {
   try {
-    const [storeRows, offeringRows] = await Promise.all([
+    const [allStoreRows, allOfferingRows] = await Promise.all([
       fetchRange("creators!A:Q"),
       fetchRange("offerings!A:F"),
     ]);
+
+    const storeRows = allStoreRows.slice(1); // drop header row
+
+    const [offeringHeader = [], ...offeringRows] = allOfferingRows;
+    const headers = offeringHeader.map(normalizeHeader);
+    const findIndex = (...names: string[]): number | undefined => {
+      const i = headers.findIndex((h) => names.includes(h));
+      return i >= 0 ? i : undefined;
+    };
+
+    const offeringColumns = {
+      name: findIndex("name", "offering", "title"),
+      type: findIndex("type", "category"),
+      price: findIndex("price", "pricing", "amount"),
+      desc: findIndex("description", "desc", "details"),
+      buyers: findIndex("buyers", "students", "members", "customers"),
+    };
 
     const partial = storeRows
       .map(parseStoreRow)
@@ -86,7 +114,7 @@ export async function getStores(): Promise<Store[]> {
     if (partial.length === 0) return STORES;
 
     const parsedOfferings = offeringRows
-      .map(parseOfferingRow)
+      .map((row) => parseOfferingRow(row, offeringColumns))
       .filter((o): o is { storeId: number; offering: Offering } => o !== null);
 
     const offeringMap = new Map<number, Offering[]>();
