@@ -25,6 +25,7 @@ export function Nav() {
           { href: "#discover", label: "Discover" },
           { href: "#", label: "Categories" },
           { href: "#", label: "Creators" },
+          { href: "/blog", label: "Blog" },
         ].map((l) => (
           <li key={l.label}>
             <Link
