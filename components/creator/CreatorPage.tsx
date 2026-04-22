@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import type { Store, Offering, OfferingType } from "@/lib/types";
 import { track } from "@/lib/track";
+import { slugify } from "@/lib/slugify";
 
 function toUrl(val: string): string {
   return val.startsWith("http") ? val : `https://${val}`;
@@ -574,13 +575,14 @@ function ProductCard({
               <span>{offering.price}</span>
             )}
           </span>
-          <button
+          <Link
+            href={`/${storeHandle}/${slugify(offering.name)}`}
             onClick={(e) => { e.stopPropagation(); track("product_click", storeHandle, offering.name); }}
             className="text-xs font-semibold text-[var(--color-off-white)] px-4 py-2 rounded-full whitespace-nowrap transition-opacity duration-150 hover:opacity-90 active:scale-[0.97]"
             style={{ background: accentColor }}
           >
             Join →
-          </button>
+          </Link>
         </div>
       </div>
     </div>
