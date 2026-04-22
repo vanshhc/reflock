@@ -543,6 +543,14 @@ function ProductCard({
 
       {/* Body */}
       <div className="p-5 flex flex-col flex-1">
+        {offering.buyers && (
+          <span className="flex items-center gap-1 text-xs text-[var(--color-gray-600)] mb-2.5">
+            <Users size={11} strokeWidth={2} />
+            <strong className="text-[var(--color-gray-500)] font-medium">
+              {offering.buyers.split(" ")[0]}
+            </strong>
+          </span>
+        )}
         <h3
           className="font-[family-name:var(--font-display)] text-base font-bold text-[var(--color-off-white)] leading-snug mb-2"
           style={{ letterSpacing: "-0.01em" }}
