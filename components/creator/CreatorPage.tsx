@@ -543,11 +543,6 @@ function ProductCard({
 
       {/* Body */}
       <div className="p-5 flex flex-col flex-1">
-        <div className="mb-2.5">
-          <span className="font-[family-name:var(--font-mono)] text-sm font-medium text-[var(--color-gray-400)]">
-            {offering.price}
-          </span>
-        </div>
         <h3
           className="font-[family-name:var(--font-display)] text-base font-bold text-[var(--color-off-white)] leading-snug mb-2"
           style={{ letterSpacing: "-0.01em" }}
@@ -561,11 +556,15 @@ function ProductCard({
           className="flex items-center justify-between pt-3.5 border-t gap-2.5"
           style={{ borderTopColor: "rgba(255,255,255,0.06)" }}
         >
-          <span className="text-xs text-[var(--color-gray-600)] flex items-center gap-1">
-            <Users size={11} />
-            <strong className="text-[var(--color-gray-500)] font-medium ml-0.5">
-              {offering.buyers}
-            </strong>
+          <span className="font-[family-name:var(--font-mono)] text-sm font-medium text-[var(--color-off-white)] flex items-baseline gap-0.5">
+            {offering.price.includes("/mo") ? (
+              <>
+                <span>{offering.price.replace("/mo", "")}</span>
+                <span className="text-xs text-[var(--color-gray-600)]">/month</span>
+              </>
+            ) : (
+              <span>{offering.price}</span>
+            )}
           </span>
           <button
             onClick={(e) => { e.stopPropagation(); track("product_click", storeHandle, offering.name); }}
