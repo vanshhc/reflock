@@ -65,6 +65,15 @@ export function CreatorPage({ store }: { store: Store }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState<"products" | "about">("products");
   const [showClaim, setShowClaim] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+    await navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    track("share_click", store.handle, shareUrl);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   const avatarBg = hexAlpha(store.color, 0.15);
   const avatarBorder = hexAlpha(store.color, 0.2);
@@ -118,7 +127,11 @@ export function CreatorPage({ store }: { store: Store }) {
                 letterSpacing: "-0.04em",
               }}
             >
-              {store.abbr}
+              {store.avatar ? (
+                <img src={store.avatar} alt={store.businessName} className="w-full h-full object-cover rounded-full" />
+              ) : (
+                store.abbr
+              )}
             </div>
 
             {/* Info */}
@@ -203,6 +216,8 @@ export function CreatorPage({ store }: { store: Store }) {
                 {isFollowing ? "Following" : "Follow"}
               </button>
               <button
+                type="button"
+                onClick={handleShare}
                 className="flex items-center gap-1.5 text-sm font-medium text-[var(--color-gray-500)] hover:text-[var(--color-off-white)] px-4 py-2 rounded-full transition-all duration-150"
                 style={{
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -210,7 +225,7 @@ export function CreatorPage({ store }: { store: Store }) {
                 }}
               >
                 <Share2 size={13} />
-                Share
+                {copied ? "Copied" : "Share"}
               </button>
             </div>
           </div>

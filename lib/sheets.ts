@@ -22,7 +22,7 @@ function normalizeHeader(value: string): string {
 
 // Col order: A=id, B=handle, C=businessName, D=role, E=bio, F=about, G=buyers,
 //            H=cat, I=abbr, J=featured, K=topics, L=ownerName,
-//            M=twitter, N=youtube, O=linkedin, P=instagram, Q=website
+//            M=twitter, N=youtube, O=linkedin, P=instagram, Q=website, R=avatar
 function parseStoreRow(row: string[]): Omit<Store, "offerings"> | null {
   const id = parseInt(row[0] ?? "");
   const handle = row[1] ?? "";
@@ -50,6 +50,7 @@ function parseStoreRow(row: string[]): Omit<Store, "offerings"> | null {
     cat:          (row[7] ?? "ai") as Category,
     color:        "var(--color-orange)",
     abbr:         row[8] ?? "",
+    avatar:       row[17] || undefined,
     featured:     row[9]?.toUpperCase() === "TRUE",
     memberSince:  0,
     topics:       row[10] ? row[10].split(",").map((t) => t.trim()).filter(Boolean) : [],
@@ -86,7 +87,7 @@ function parseOfferingRow(
 export async function getStores(): Promise<Store[]> {
   try {
     const [allStoreRows, allOfferingRows] = await Promise.all([
-      fetchRange("creators!A:Q"),
+      fetchRange("creators!A:R"),
       fetchRange("offerings!A:F"),
     ]);
 

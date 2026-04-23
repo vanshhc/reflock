@@ -4,7 +4,7 @@ import { Wordmark } from "./Wordmark";
 export function Nav() {
   return (
     <nav
-      className="fixed inset-x-0 top-0 z-[200] flex items-center justify-between h-16 px-6 md:px-12 border-b"
+      className="fixed inset-x-0 top-0 z-[200] relative flex items-center justify-between h-16 px-6 md:px-12 border-b"
       style={{
         background: "rgba(15,15,15,0.88)",
         backdropFilter: "blur(16px)",
@@ -20,11 +20,11 @@ export function Nav() {
         <Wordmark />
       </Link>
 
-      <ul className="hidden md:flex items-center gap-8 list-none">
+      <ul className="hidden md:flex items-center gap-8 list-none absolute left-1/2 -translate-x-1/2">
         {[
-          { href: "#discover", label: "Discover" },
-          { href: "#", label: "Categories" },
-          { href: "#", label: "Creators" },
+          { href: "/#discover", label: "Discover" },
+          { href: "/#discover", label: "Categories" },
+          { href: "/#discover", label: "Creators" },
           { href: "/blog", label: "Blog" },
         ].map((l) => (
           <li key={l.label}>

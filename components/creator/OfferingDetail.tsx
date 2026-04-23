@@ -130,7 +130,11 @@ export function OfferingDetail({
                   letterSpacing: "-0.03em",
                 }}
               >
-                {store.abbr}
+                {store.avatar ? (
+                  <img src={store.avatar} alt={store.businessName} className="w-full h-full object-cover rounded-full" />
+                ) : (
+                  store.abbr
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <p
