@@ -34,6 +34,7 @@ export interface Store {
   cat: Category;
   color: string;
   abbr: string;
+  avatar?: string;
   featured?: boolean;
   memberSince: number;
   topics: string[];

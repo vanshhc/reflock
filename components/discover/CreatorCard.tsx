@@ -26,7 +26,11 @@ export function CreatorCard({ store }: { store: Store }) {
               letterSpacing: "-0.03em",
             }}
           >
-            {store.abbr}
+            {store.avatar ? (
+              <img src={store.avatar} alt={store.businessName} className="w-full h-full object-cover rounded-full" />
+            ) : (
+              store.abbr
+            )}
           </div>
           <div className="flex flex-col gap-[2px]">
             <span className="font-[family-name:var(--font-display)] text-base font-bold text-[var(--color-off-white)]">
