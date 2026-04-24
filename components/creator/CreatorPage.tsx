@@ -534,27 +534,20 @@ function ProductCard({
     >
       {/* Cover placeholder */}
       <div
-        className="w-full aspect-video relative overflow-hidden flex-shrink-0"
-        style={{ background: "var(--color-dark-700)" }}
+        className="w-full aspect-video relative overflow-hidden flex-shrink-0 flex items-center justify-center"
+        style={{ background: hexAlpha(accentColor, 0.08) }}
       >
-        <div
-          className="absolute inset-0"
+        <span
+          className="font-[family-name:var(--font-display)] font-extrabold select-none"
           style={{
-            backgroundImage:
-              "repeating-linear-gradient(-45deg, transparent, transparent 12px, rgba(255,255,255,0.025) 12px, rgba(255,255,255,0.025) 13px)",
+            fontSize: "2.5rem",
+            lineHeight: 1,
+            color: hexAlpha(accentColor, 0.06),
+            letterSpacing: "-0.04em",
           }}
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5">
-          <div
-            className="w-8 h-8 rounded-[6px] flex items-center justify-center text-[var(--color-gray-600)]"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-          >
-            {TYPE_ICONS[offering.type] ?? <Box size={16} />}
-          </div>
-          <span className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--color-gray-700)] tracking-[0.05em]">
-            cover image
-          </span>
-        </div>
+        >
+          {offering.name.charAt(0).toUpperCase()}
+        </span>
       </div>
 
       {/* Body */}
