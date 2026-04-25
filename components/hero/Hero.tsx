@@ -4,7 +4,7 @@ import { HeroStorefronts } from "./HeroStorefronts";
 
 export function Hero() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[120px] md:pt-[160px] pb-[60px] md:pb-[100px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
+    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[72px] md:pt-[100px] pb-[60px] md:pb-[100px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
       <div className="rf-rise">
         <p
           className="text-xs font-semibold uppercase text-[var(--color-orange)] mb-6"
