@@ -318,7 +318,7 @@ export function CreatorPage({ store }: { store: Store }) {
             >
               About {store.businessName}
             </h2>
-            {store.about.split("\n\n").map((para, i) => (
+            {(store.about ?? "").split("\n\n").filter(Boolean).map((para, i) => (
               <p
                 key={i}
                 className="text-sm text-[var(--color-gray-400)] leading-relaxed mb-7"
@@ -373,7 +373,7 @@ export function CreatorPage({ store }: { store: Store }) {
                 Topics
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {store.topics.map((topic) => (
+                {(store.topics ?? []).map((topic) => (
                   <span
                     key={topic}
                     className="text-xs font-medium text-[var(--color-gray-500)] px-3 py-1.5 rounded-full border"
@@ -514,7 +514,9 @@ function ProductCard({
   storeHandle: string;
 }) {
   return (
-    <div
+    <Link
+      href={`/${storeHandle}/${slugify(offering.name)}`}
+      onClick={() => track("product_click", storeHandle, offering.name)}
       className="rounded-2xl overflow-hidden border flex flex-col cursor-pointer group transition-all duration-200 hover:-translate-y-0.5"
       style={{
         background: "var(--color-dark-800)",
@@ -576,17 +578,15 @@ function ProductCard({
           <span className="font-[family-name:var(--font-mono)] text-sm font-medium text-[var(--color-off-white)] flex items-baseline gap-0.5">
             <span>{offering.price}</span>
           </span>
-          <Link
-            href={`/${storeHandle}/${slugify(offering.name)}`}
-            onClick={(e) => { e.stopPropagation(); track("product_click", storeHandle, offering.name); }}
+          <span
             className="text-sm font-bold tracking-[0.01em] text-[var(--color-off-white)] px-4 py-2 rounded-full whitespace-nowrap transition-opacity duration-150 hover:opacity-90 active:scale-[0.97]"
             style={{ background: accentColor }}
           >
             Join →
-          </Link>
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
