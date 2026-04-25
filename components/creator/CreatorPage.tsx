@@ -78,11 +78,10 @@ export function CreatorPage({ store }: { store: Store }) {
   const avatarBg = hexAlpha(store.color, 0.15);
   const avatarBorder = hexAlpha(store.color, 0.2);
 
+  const baseMembers = parseInt(store.buyers.split(" ")[0].replace(/,/g, ""), 10) || 0;
   const stats = [
-    { value: store.buyers.split(" ")[0], label: "Students" },
+    { value: String(baseMembers + (isFollowing ? 1 : 0)), label: "Members" },
     { value: String(store.offerings.length), label: "Products" },
-    { value: lowestPrice(store.offerings), label: "Starting from" },
-    { value: String(store.memberSince), label: "Member since" },
   ];
 
   return (
