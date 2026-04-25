@@ -17,6 +17,7 @@ import {
   Box,
   Youtube,
   Linkedin,
+  Instagram,
   Globe,
   ShieldCheck,
   X,
@@ -78,11 +79,10 @@ export function CreatorPage({ store }: { store: Store }) {
   const avatarBg = hexAlpha(store.color, 0.15);
   const avatarBorder = hexAlpha(store.color, 0.2);
 
+  const baseMembers = parseInt(store.buyers.split(" ")[0].replace(/,/g, ""), 10) || 0;
   const stats = [
-    { value: store.buyers.split(" ")[0], label: "Students" },
+    { value: String(baseMembers + (isFollowing ? 1 : 0)), label: "Members" },
     { value: String(store.offerings.length), label: "Products" },
-    { value: lowestPrice(store.offerings), label: "Starting from" },
-    { value: String(store.memberSince), label: "Member since" },
   ];
 
   return (
@@ -155,9 +155,38 @@ export function CreatorPage({ store }: { store: Store }) {
                   Claim profile
                 </button>
               </div>
-              <p className="text-sm text-[var(--color-gray-600)] mb-1">
+              <p className="text-sm text-[var(--color-gray-600)] mb-2">
                 by {store.ownerName}
               </p>
+              {store.socials && (
+                <div className="flex items-center gap-3.5 mb-3.5">
+                  {store.socials.twitter && (
+                    <a href={toUrl(store.socials.twitter)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "twitter")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      <X size={14} />
+                    </a>
+                  )}
+                  {store.socials.youtube && (
+                    <a href={toUrl(store.socials.youtube)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "youtube")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      <Youtube size={14} />
+                    </a>
+                  )}
+                  {store.socials.linkedin && (
+                    <a href={toUrl(store.socials.linkedin)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "linkedin")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      <Linkedin size={14} />
+                    </a>
+                  )}
+                  {store.socials.instagram && (
+                    <a href={toUrl(store.socials.instagram)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "instagram")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      <Instagram size={14} />
+                    </a>
+                  )}
+                  {store.socials.website && (
+                    <a href={toUrl(store.socials.website)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "website")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      <Globe size={14} />
+                    </a>
+                  )}
+                </div>
+              )}
               <p className="text-base text-[var(--color-gray-500)] mb-3.5">
                 {store.role}
               </p>
@@ -167,30 +196,6 @@ export function CreatorPage({ store }: { store: Store }) {
               >
                 {store.bio}
               </p>
-              {store.socials && (
-                <div className="flex items-center gap-4">
-                  {store.socials.twitter && (
-                    <a href={toUrl(store.socials.twitter)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "twitter")} className="text-[var(--color-gray-600)] hover:text-[var(--color-gray-300)] transition-colors duration-150">
-                      <X size={16} />
-                    </a>
-                  )}
-                  {store.socials.youtube && (
-                    <a href={toUrl(store.socials.youtube)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "youtube")} className="text-[var(--color-gray-600)] hover:text-[var(--color-gray-300)] transition-colors duration-150">
-                      <Youtube size={16} />
-                    </a>
-                  )}
-                  {store.socials.linkedin && (
-                    <a href={toUrl(store.socials.linkedin)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "linkedin")} className="text-[var(--color-gray-600)] hover:text-[var(--color-gray-300)] transition-colors duration-150">
-                      <Linkedin size={16} />
-                    </a>
-                  )}
-                  {store.socials.website && (
-                    <a href={toUrl(store.socials.website)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "website")} className="text-[var(--color-gray-600)] hover:text-[var(--color-gray-300)] transition-colors duration-150">
-                      <Globe size={16} />
-                    </a>
-                  )}
-                </div>
-              )}
             </div>
 
             {/* Actions — hidden on mobile */}
