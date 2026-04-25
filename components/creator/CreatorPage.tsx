@@ -50,10 +50,6 @@ function lowestPrice(offerings: Offering[]): string {
   return priced.sort((a, b) => a.num - b.num)[0].price;
 }
 
-function cityFrom(role: string): string {
-  const parts = role.split("·");
-  return parts.length > 1 ? parts[parts.length - 1].trim() : "—";
-}
 
 function hexAlpha(hex: string, alpha: number): string {
   const a = Math.round(alpha * 255)
@@ -187,9 +183,6 @@ export function CreatorPage({ store }: { store: Store }) {
                   )}
                 </div>
               )}
-              <p className="text-base text-[var(--color-gray-500)] mb-3.5">
-                {store.role}
-              </p>
               <p
                 className="text-sm text-[var(--color-gray-400)] leading-relaxed max-w-[540px] mb-5"
                 style={{ textWrap: "pretty" } as React.CSSProperties}
@@ -315,7 +308,7 @@ export function CreatorPage({ store }: { store: Store }) {
 
       {/* About panel */}
       {activeTab === "about" && (
-        <section className="max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-20 grid grid-cols-1 md:grid-cols-[1fr_300px] gap-14 items-start">
+        <section className="max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-120 grid grid-cols-1 md:grid-cols-[1fr_300px] gap-14 items-start">
           <div>
             <h2
               className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-[var(--color-off-white)] mb-3"
@@ -334,39 +327,6 @@ export function CreatorPage({ store }: { store: Store }) {
             ))}
           </div>
           <aside className="flex flex-col gap-3.5">
-            <div
-              className="rounded-2xl p-5 border"
-              style={{
-                background: "var(--color-dark-800)",
-                borderColor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <div className="text-xs font-semibold uppercase tracking-wider text-[var(--color-gray-600)] mb-3.5">
-                Quick facts
-              </div>
-              {[
-                { label: "Based in", value: cityFrom(store.role) },
-                { label: "Member since", value: String(store.memberSince) },
-                { label: "Total students", value: store.buyers },
-                {
-                  label: "Products",
-                  value: String(store.offerings.length),
-                },
-              ].map((row) => (
-                <div
-                  key={row.label}
-                  className="flex justify-between items-center py-2 text-sm border-b last:border-0 last:pb-0"
-                  style={{ borderBottomColor: "rgba(255,255,255,0.05)" }}
-                >
-                  <span className="text-[var(--color-gray-500)]">
-                    {row.label}
-                  </span>
-                  <span className="text-[var(--color-off-white)] font-medium">
-                    {row.value}
-                  </span>
-                </div>
-              ))}
-            </div>
             <div
               className="rounded-2xl p-5 border"
               style={{
