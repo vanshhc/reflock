@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { HeroStorefronts } from "./HeroStorefronts";
+import { HeroSearch } from "./HeroSearch"; // typewriter search
 
 export function Hero() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[72px] md:pt-[100px] pb-[60px] md:pb-[100px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
+    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[32px] md:pt-[48px] pb-[60px] md:pb-[100px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
       <div className="rf-rise">
         <p
           className="text-xs font-semibold uppercase text-[var(--color-orange)] mb-6"
@@ -39,20 +40,14 @@ export function Hero() {
           by India&apos;s top creators, all in one place.
         </p>
 
-        <div className="flex items-center gap-5">
-          <Link
-            href="#discover"
-            className="font-[family-name:var(--font-display)] text-base font-bold text-white bg-[var(--color-orange)] hover:bg-[var(--color-orange-light)] active:scale-[0.97] px-7 py-3.5 rounded-full inline-flex items-center gap-2 transition-all duration-150"
-          >
-            Explore products
-            <ArrowRight size={18} strokeWidth={2} />
-          </Link>
+        <div className="flex flex-col gap-4">
+          <HeroSearch />
           <Link
             href="#"
-            className="text-sm font-medium text-[var(--color-gray-500)] hover:text-[var(--color-off-white)] flex items-center gap-1.5 transition-colors duration-150"
+            className="group text-base font-medium text-[var(--color-gray-400)] hover:text-[var(--color-off-white)] flex items-center gap-2 transition-colors duration-200 w-fit"
           >
-            Sell your products
-            <ChevronRight size={14} strokeWidth={2} />
+            Start selling
+            <ChevronRight size={16} strokeWidth={2.5} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 
