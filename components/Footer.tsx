@@ -8,7 +8,7 @@ export function Footer() {
         <Wordmark size="footer" muted />
       </Link>
       <span className="text-xs text-[var(--color-gray-700)]">
-        © 2025 Reflock Technologies. Made in India.
+        © 2026 Reflock Technologies. Made in India.
       </span>
     </footer>
   );

@@ -32,8 +32,8 @@ export function CtaStrip() {
           Launch your product on re.
         </h2>
         <p className="text-base text-[var(--color-gray-500)] leading-[1.65] mb-8">
-          Join 340+ Indian creators already selling courses, communities, and
-          coaching on re.
+          Join largest marketplace of Indian creators already selling courses, communities,
+          coaching and all types of digital products on Reflock.
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
           <button

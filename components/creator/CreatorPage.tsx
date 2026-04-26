@@ -158,7 +158,9 @@ export function CreatorPage({ store }: { store: Store }) {
                 <div className="flex items-center gap-3.5 mb-3.5">
                   {store.socials.twitter && (
                     <a href={toUrl(store.socials.twitter)} target="_blank" rel="noopener noreferrer" onClick={() => track("social_click", store.handle, "twitter")} className="transition-opacity duration-150 hover:opacity-70" style={{ color: "rgba(255,255,255,0.28)" }}>
-                      <X size={14} />
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
                     </a>
                   )}
                   {store.socials.youtube && (
@@ -286,75 +288,71 @@ export function CreatorPage({ store }: { store: Store }) {
         ))}
       </div>
 
-      {/* Products panel */}
-      {activeTab === "products" && (
-        <section className="max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {store.offerings.map((offering, i) => (
-              <ProductCard
-                key={i}
-                offering={offering}
-                accentColor={store.color}
-                storeHandle={store.handle}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Products panel — always in DOM, CSS-toggled so crawlers index both tabs */}
+      <section className={`max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-20${activeTab !== "products" ? " hidden" : ""}`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {store.offerings.map((offering, i) => (
+            <ProductCard
+              key={i}
+              offering={offering}
+              accentColor={store.color}
+              storeHandle={store.handle}
+            />
+          ))}
+        </div>
+      </section>
 
       {showClaim && (
         <ClaimModal store={store} onClose={() => setShowClaim(false)} />
       )}
 
-      {/* About panel */}
-      {activeTab === "about" && (
-        <section className="max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-120 grid grid-cols-1 md:grid-cols-[1fr_300px] gap-14 items-start">
-          <div>
-            <h2
-              className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-[var(--color-off-white)] mb-3"
-              style={{ letterSpacing: "-0.03em" }}
+      {/* About panel — always in DOM, CSS-toggled */}
+      <section className={`max-w-[1200px] mx-auto px-6 md:px-12 py-12 pb-120 grid grid-cols-1 md:grid-cols-[1fr_300px] gap-14 items-start${activeTab !== "about" ? " hidden" : ""}`}>
+        <div>
+          <h2
+            className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-[var(--color-off-white)] mb-3"
+            style={{ letterSpacing: "-0.03em" }}
+          >
+            About {store.businessName}
+          </h2>
+          {(store.about ?? "").split("\n\n").filter(Boolean).map((para, i) => (
+            <p
+              key={i}
+              className="text-sm text-[var(--color-gray-400)] leading-relaxed mb-7"
+              style={{ textWrap: "pretty" } as React.CSSProperties}
             >
-              About {store.businessName}
-            </h2>
-            {(store.about ?? "").split("\n\n").filter(Boolean).map((para, i) => (
-              <p
-                key={i}
-                className="text-sm text-[var(--color-gray-400)] leading-relaxed mb-7"
-                style={{ textWrap: "pretty" } as React.CSSProperties}
-              >
-                {para}
-              </p>
-            ))}
-          </div>
-          <aside className="flex flex-col gap-3.5">
-            <div
-              className="rounded-2xl p-5 border"
-              style={{
-                background: "var(--color-dark-800)",
-                borderColor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <div className="text-xs font-semibold uppercase tracking-wider text-[var(--color-gray-600)] mb-3.5">
-                Topics
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {(store.topics ?? []).map((topic) => (
-                  <span
-                    key={topic}
-                    className="text-xs font-medium text-[var(--color-gray-500)] px-3 py-1.5 rounded-full border"
-                    style={{
-                      background: "rgba(255,255,255,0.05)",
-                      borderColor: "rgba(255,255,255,0.07)",
-                    }}
-                  >
-                    {topic}
-                  </span>
-                ))}
-              </div>
+              {para}
+            </p>
+          ))}
+        </div>
+        <aside className="flex flex-col gap-3.5">
+          <div
+            className="rounded-2xl p-5 border"
+            style={{
+              background: "var(--color-dark-800)",
+              borderColor: "rgba(255,255,255,0.06)",
+            }}
+          >
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--color-gray-600)] mb-3.5">
+              Topics
             </div>
-          </aside>
-        </section>
-      )}
+            <div className="flex flex-wrap gap-1.5">
+              {(store.topics ?? []).map((topic) => (
+                <span
+                  key={topic}
+                  className="text-xs font-medium text-[var(--color-gray-500)] px-3 py-1.5 rounded-full border"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    borderColor: "rgba(255,255,255,0.07)",
+                  }}
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </section>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { HeroSearch } from "./HeroSearch"; // typewriter search
 
 export function Hero() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[72px] md:pt-[100px] pb-[100px] md:pb-[160px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
+    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[88px] md:pt-[120px] pb-[120px] md:pb-[180px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
       <div className="rf-rise">
         <p
           className="text-xs font-semibold uppercase text-[var(--color-orange)] mb-6"
