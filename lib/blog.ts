@@ -3,7 +3,6 @@ import path from "path";
 import matter from "gray-matter";
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
-
 export interface PostMeta {
   title: string;
   description: string;
@@ -17,6 +16,7 @@ export interface Post extends PostMeta {
 }
 
 export function getAllPosts(): PostMeta[] {
+  if (!fs.existsSync(BLOG_DIR)) return [];
   const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".mdx"));
 
   return files
