@@ -4,7 +4,7 @@ import { Wordmark } from "./Wordmark";
 export function Nav() {
   return (
     <nav
-      className="fixed inset-x-0 top-0 z-[200] relative flex items-center justify-between h-16 px-6 md:px-12 border-b"
+      className="fixed inset-x-0 top-0 z-[200] flex items-center justify-between h-16 px-6 md:px-12 border-b"
       style={{
         background: "rgba(15,15,15,0.88)",
         backdropFilter: "blur(16px)",

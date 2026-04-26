@@ -5,7 +5,7 @@ import { HeroSearch } from "./HeroSearch"; // typewriter search
 
 export function Hero() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[32px] md:pt-[48px] pb-[60px] md:pb-[100px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
+    <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-[72px] md:pt-[100px] pb-[100px] md:pb-[160px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[72px] items-center">
       <div className="rf-rise">
         <p
           className="text-xs font-semibold uppercase text-[var(--color-orange)] mb-6"
@@ -15,7 +15,7 @@ export function Hero() {
         </p>
 
         <h1
-          className="font-[family-name:var(--font-display)] font-extrabold text-[var(--color-off-white)] mb-6"
+          className="font-[family-name:var(--font-display)] font-bold text-[var(--color-off-white)] mb-6"
           style={{
             fontSize: "clamp(2.75rem, 5vw, 4.25rem)",
             lineHeight: 1.1,
@@ -36,8 +36,7 @@ export function Hero() {
           className="text-lg text-[var(--color-gray-500)] leading-[1.65] max-w-[440px] mb-10"
           style={{ textWrap: "pretty" }}
         >
-          The best paid communities, cohorts, templates, and AI tools — built
-          by India&apos;s top creators, all in one place.
+          Launch, sell, and grow your digital business with easy payments and modern discovery.
         </p>
 
         <div className="flex flex-col gap-4">
